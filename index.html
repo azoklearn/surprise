@@ -138,6 +138,27 @@
     color: #c0436a;
     margin-bottom: 12px;
   }
+  .booking {
+    margin: 28px auto 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    max-width: 420px;
+  }
+  .booking-item {
+    background: rgba(255, 255, 255, 0.85);
+    border: 1px solid #f3b6c7;
+    border-radius: 14px;
+    padding: 14px 18px;
+    font-size: 17px;
+    text-align: left;
+    transition: all 0.4s ease;
+  }
+  .booking-item.done {
+    border-color: #7bc28a;
+    background: #f1faf3;
+  }
+  .booking-item .status { display: inline-block; }
   .footer-note {
     margin-top: 40px;
     font-size: 15px;
@@ -174,6 +195,16 @@
   <div class="response" id="response">
     <h2>Tu as fait de moi le plus heureux ❤</h2>
     <p>Rendez-vous ce soir. Mets-toi belle (même si tu l'es toujours).</p>
+
+    <div class="booking" id="booking">
+      <div class="booking-item" data-delay="0">
+        <span class="status">⏳ Connexion au cinéma…</span>
+      </div>
+      <div class="booking-item" data-delay="1">
+        <span class="status">⏳ Réservation du restaurant…</span>
+      </div>
+    </div>
+
     <div class="signature">— Nono, qui t'aime</div>
   </div>
 
@@ -223,6 +254,19 @@
       heartsContainer.appendChild(h);
     }
     window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+
+    // Simulate auto-booking
+    const bookings = [
+      { delay: 1200, text: '🎬 Places de ciné réservées · 2 fauteuils confort' },
+      { delay: 2600, text: '🍽 Table réservée au restaurant · pour deux' }
+    ];
+    const items = document.querySelectorAll('.booking-item');
+    bookings.forEach((b, i) => {
+      setTimeout(() => {
+        items[i].classList.add('done');
+        items[i].querySelector('.status').innerHTML = '✅ ' + b.text;
+      }, b.delay);
+    });
   }
 </script>
 
